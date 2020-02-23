@@ -1,0 +1,9 @@
+FROM node:10
+LABEL maintainer "soltune <k@psycube.com>"
+ENV NODE_PATH /usr/local/lib/node_modules
+
+RUN npm install glob@7.1.6 trie-search@1.2.11 lodash@4.17.15 -g
+
+# example. 
+# http://localhost:8080/browse?path=/
+# http://localhost:8080/shuffle

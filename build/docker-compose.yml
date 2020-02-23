@@ -1,0 +1,30 @@
+version: '3'
+services:
+  chipplayerjs-build:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: soltune/chipplayerjs-build
+    volumes:
+      - out:/usr/share/www/
+      - catalog:/usr/local/src/chip-player-js/catalog/
+    working_dir: /usr/local/src/chip-player-js/
+    command: >
+      bash -c "
+      git pull
+      && yarn run build
+      && rm -rf /usr/share/www/*
+      && cp -r ./build/* /usr/share/www/"
+
+volumes:
+  out:
+    driver_opts:
+      type: none
+      device: ${PWD}/../www
+      o: bind
+  catalog:
+    driver_opts:
+      type: none
+      device: ${PWD}/../catalog
+      o: bind
+
