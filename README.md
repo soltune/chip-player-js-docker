@@ -1,11 +1,11 @@
-# Chipplayer JS soltune fork - Docker
+# Chip Player JS - Docker
 
 Lets' create your own [Chip Player JS (soltune's fork)](https://github.com/soltune/chip-player-js) music library easily by Docker!
 
 ## Preparation 
 
 ### Install Docker
-First, install Docker Engine onto your host OS before proceeding to this instruction.
+First, install Docker Engine onto your host OS before proceeding to the instructions below.
 
 - Linux
     - [CentOS](https://docs.docker.com/install/linux/docker-ce/centos/)
@@ -43,7 +43,7 @@ So this step can be skipped if you run this project on your localhost(or your lo
 Just edit firebaseConfig.js in ./build/ directory with your favourite text editor.
 
 ### 3. Prepare rhythm files
-S98, PMD and FMP require additional samples to play rhythm tracks.  
+Some file formats, S98, PMD and FMP, require additional samples to play rhythm tracks.  
 Just place the following files on ./build/rhythm/ directory. (each names are case sensitive!)
 
 - 2608_BD.WAV
@@ -53,6 +53,8 @@ Just place the following files on ./build/rhythm/ directory. (each names are cas
 - 2608_TOM.WAV
 - 2608_TOP.WAV
 - ym2608_adpcm_rom.bin
+
+<img src="https://github.com/soltune/chip-player-js-docker/blob/image/images/figure_rhythm.png?raw=true" width=300 />
 
 ### 4. Prepare additional soundfonts **(optional)**
 By adding soundfonts into ./build/soundfonts/ directory improve sound quality for midi files.
@@ -86,16 +88,18 @@ The player supports the following file types;
 | xm  | FastTracker II Music Modules                        |
 | v2m | V2 Synthesizer System                               |
 
-This step also can be done later. Refer [Update Catalog](#Update Catalog) section for the details.
+<img src="https://github.com/soltune/chip-player-js-docker/blob/image/images/figure_catalog.png?raw=true" width=300 />
+
+This step also can be done later. Refer [Update Catalog Only](#update-catalog-only) section for the details.
 
 ### 6. First build on Docker
-Ok, build whole resources on Docker by launching build container on ./build/ directory;
+Build whole resources on Docker by launching build container on ./build/ directory;
 
 ```sh
 cd ./build/ && docker-compose up
 ```
 
-This step will take a few minutes(around 10 minutes on MBP 2013), so please be patient until the following message shown and return to prompt.
+This step will take a few minutes(around 10 minutes on MBP 2013), so please be patient until the following message shown.
 
 ```sh
 chipplayerjs-build_1  | Done in 141.81s.
@@ -112,7 +116,9 @@ $ cd ../server/ && docker-compose up -d
 
 To browse your library, open [http://localhost:5000/](http://localhost:5000/) with your browser.
 
-## Administrations
+<img src="https://github.com/soltune/chip-player-js-docker/blob/image/images/figure_startup.png?raw=true" width=500 />
+
+## Operations
 ### Launch Servers
 When you restart your host OS you'll need relaunch the servers on Docker.
 
@@ -120,16 +126,22 @@ When you restart your host OS you'll need relaunch the servers on Docker.
 $ cd ./server/ && docker-compose up -d
 ```
 
-### Stop Servers
+### Shutdown Servers
 To stop your servers, just like the following;
 
 ```sh
 $ cd ./server/ && docker-compose down
 ```
 
-### Update Chip Player JS and Your Catalog
-The catalog must be updated when there're any changes(add/remove/modify) in ./catalog directory.
-This procedure also update Chip Player JS itself.
+### Update Catalog Only
+The catalog must be updated when any changes(add/remove/modify) made in ./catalog directory.
+
+```sh
+$ cd ./build/ && docker-compose run chipplayerjs-build bash -c "yarn run build-catalog && cp ./public/catalog* ./public/directories.json /usr/share/www/" && cd ../server/ && docker-compose restart
+```
+
+### Update Chip Player JS
+This operation updates Chip Player JS along with catalog to latest. 
 
 ```sh
 $ cd ./build/ && docker-compose up && cd ../server/ && docker-compose restart
