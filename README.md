@@ -56,11 +56,14 @@ Just place the following files on ./build/rhythm/ directory. (each names are cas
 
 <img src="https://github.com/soltune/chip-player-js-docker/blob/image/images/figure_rhythm.png?raw=true" width=300 />
 
-### 4. Prepare additional soundfonts **(optional)**
+### 4. Prepare the instrument rom file
+Put yrw801.rom that is YMF278(OPL4) instrument file into ./build/roms/.
+
+### 5. Prepare additional soundfonts **(optional)**
 By adding soundfonts into ./build/soundfonts/ directory improve sound quality for midi files.
 Available .sf2 files can be found at [MIDIPlayer.js](https://github.com/soltune/chip-player-js/blob/develop/src/players/MIDIPlayer.js#L10).
 
-### 5. Place music files
+### 6. Place music files
 Put chiptune files into ./catalog directory to create your own music library!  
 The player supports the following file types;
 
@@ -92,7 +95,7 @@ The player supports the following file types;
 
 This step also can be done later. Refer [Update Catalog Only](#update-catalog-only) section for the details.
 
-### 6. First build on Docker
+### 7. First build on Docker
 Build whole resources on Docker by launching build container on ./build/ directory;
 
 ```sh
@@ -107,7 +110,7 @@ build_chipplayerjs-build_1 exited with code 0
 $  <- return to prompt
 ```
 
-### 7. Launch Web Servers on Docker
+### 8. Launch Web Servers on Docker
 Finally, let's launch both nginx and nodejs servers;
 
 ```sh

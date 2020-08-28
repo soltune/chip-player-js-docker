@@ -1,6 +1,6 @@
 FROM debian:buster
 LABEL maintainer "soltune <k@psycube.com>"
-ENV EMSCRIPTEN_VERSION releases-fastcomp-1290d9deb93d67c4649999a8f2c8d9167d38dc04-64bit
+ENV EMSCRIPTEN_VERSION 1.38.47
 ENV PORT_STATIC 5000
 ENV PORT_API 5001
 
@@ -21,6 +21,7 @@ RUN apt-get -qq update \
         npm \
         pkg-config \
         python \
+        python3 \
         tar \
         xz-utils \
     && rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -67,8 +68,12 @@ RUN source /usr/local/src/emsdk/emsdk_env.sh \
     && emmake make fluidlite-static
 
 WORKDIR /usr/local/src/chip-player-js/
-ADD ./rhythm/*WAV ./rhythm/*bin ./public/rhythm/
+ADD ./rhythm/_put_rhythm_files_here_ ./rhythm/*WAV ./rhythm/*bin ./public/rhythm/
+ADD ./roms/_put_rom_files_here_ ./roms/*rom ./public/instruments/
+ADD ./soundfonts/_put_sf2_files_here_ ./soundfonts/*sf2 ./soundfonts/*SF2 ./public/soundfonts/
 ADD ./firebaseConfig.js ./src/config/
-ADD ./soundfonts/*sf2 ./soundfonts/*SF2 ./public/soundfonts/
+RUN rm -f ./public/rhythm/_put_rhythm_files_here_ ./public/instruments/_put_rom_files_here_ ./public/soundfonts/_put_sf2_files_here_
 
-RUN yarn install 
+
+RUN yarn install && yarn run build
+
