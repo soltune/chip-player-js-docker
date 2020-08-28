@@ -32,7 +32,7 @@ After cloning this repository, create www directory and firebaseConfig.js (from 
 $ git clone https://github.com/soltune/chip-player-js-docker.git
 $ cd chip-player-js-docker
 $ mkdir www
-$ cp ./build/firebaseConfig.sample.js ./build/firebaseConfig.js
+$ cp ./build/firebaseConfig.example.js ./build/firebaseConfig.js
 ```
 
 ### 2. Prepare Firebase account and Edit your settings **(Optional)**
